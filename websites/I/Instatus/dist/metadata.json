@@ -1,0 +1,56 @@
+{
+	"$schema": "https://schemas.premid.app/metadata/1.7",
+	"author": {
+		"name": "mccuber",
+		"id": "693088765333471284"
+	},
+	"service": "Instatus",
+	"description": {
+		"en": "Get a beautiful status page that's free forever on Instatus.",
+		"de": "Holen Sie sich eine ansprechende Statusseite, welche auf Instatus für immer kostenlos bleibt."
+	},
+	"url": [
+		"instatus.com",
+		"instat.us"
+	],
+	"regExp": "(([a-z-_0-9]+[.])?instatus[.]com|instat.us).*",
+	"version": "1.0.0",
+	"logo": "https://i.imgur.com/2BdUo1l.png",
+	"thumbnail": "https://i.imgur.com/a/ggxm0cS.png",
+	"color": "#4de5bf",
+	"category": "other",
+	"tags": [
+		"instatus",
+		"statuspage"
+	],
+	"settings": [
+		{
+			"id": "timestamp",
+			"title": "Show Timestamps",
+			"icon": "fad fa-stopwatch",
+			"value": true
+		},
+		{
+			"id": "buttons",
+			"title": "Show Buttons",
+			"icon": "fas fa-compress-arrows-alt",
+			"value": true
+		},
+		{
+			"id": "logo",
+			"title": "Icon",
+			"value": 0,
+			"values": [
+				"White big",
+				"White small",
+				"White small with bg",
+				"Turquoise green big",
+				"Turquoise green small",
+				"Turquoise green small with bg",
+				"Black big",
+				"Black small",
+				"Black small with bg"
+			]
+		}
+	]
+}
