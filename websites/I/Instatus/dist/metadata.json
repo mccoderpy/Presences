@@ -16,7 +16,7 @@
 	"regExp": "(([a-z-_0-9]+[.])?instatus[.]com|instat.us).*",
 	"version": "1.0.0",
 	"logo": "https://i.imgur.com/2BdUo1l.png",
-	"thumbnail": "https://i.imgur.com/a/ggxm0cS.png",
+	"thumbnail": "https://i.imgur.com/UG5QpRe.png",
 	"color": "#4de5bf",
 	"category": "other",
 	"tags": [
@@ -39,17 +39,17 @@
 		{
 			"id": "logo",
 			"title": "Icon",
-			"value": 0,
+			"value": 2,
 			"values": [
 				"White big",
 				"White small",
-				"White small with bg",
+				"White/Black small",
 				"Turquoise green big",
 				"Turquoise green small",
-				"Turquoise green small with bg",
+				"Turquoise/Black green small",
 				"Black big",
 				"Black small",
-				"Black small with bg"
+				"Black/White small"
 			]
 		}
 	]
