@@ -5,12 +5,25 @@ const presence = new Presence({
 
 let browsingTimestamp = Math.floor(Date.now() / 1000),
 	prevUrl = document.location.href,
-	smallImageKeys: { [name: string]: string } = {
-		UP: "status-ok",
-		HASISSUES: "status-down",
-		UNDERMAINTENANCE: "status-notice"
-	};
-let { endTimestamp, ...currentPresenceData }: PresenceData = {};
+	{ endTimestamp, ...currentPresenceData }: PresenceData = {};
+
+//Just a function to compare if two PresenceData instances are the same. Used at the end of code//
+const deepEqual = function (oldPresenceData: PresenceData, newPresenceData: PresenceData): boolean {
+  if (newPresenceData.details != oldPresenceData.details) return false
+  else if (newPresenceData.state?.valueOf() != oldPresenceData.state?.valueOf()) return false
+  else if (newPresenceData.startTimestamp?.valueOf() != oldPresenceData.startTimestamp?.valueOf()) return false
+  else if (newPresenceData.smallImageKey?.valueOf() != oldPresenceData.smallImageKey?.valueOf()) return false
+  else if (newPresenceData.smallImageText?.valueOf() != oldPresenceData.smallImageText?.valueOf()) return false
+  else if (newPresenceData.buttons?.length != oldPresenceData.buttons?.length) return false
+  else if (newPresenceData.buttons?.length) {
+    for (var [index, button] of newPresenceData.buttons.entries()) {
+      if (button.label != oldPresenceData.buttons[index].label)  return false
+      else if (button.url != oldPresenceData.buttons[index].url)  return false
+      else return true
+    }
+  }
+  else return true
+}
 
 function defaultStatus(presenceData: PresenceData): PresenceData {
 	try {
@@ -28,15 +41,18 @@ function defaultStatus(presenceData: PresenceData): PresenceData {
 		"/": {
 			details: `Viewing ${document.querySelector("head>title").textContent}`,
 			state: "Main page",
-			smallImageKey:
-				smallImageKeys[
-					document
-						.querySelector("#__NEXT_DATA__")
-						.textContent.match(
-							/\"status\"\:\"(?<status>UP|HASISSUES|UNDERMAINTENANCE)/
-						)
-						.groups.status.valueOf()
-				],
+			smallImageKey: {
+				UP: "status-ok",
+				HASISSUES: "status-down",
+				UNDERMAINTENANCE: "status-notice"
+			}[
+				document
+					.querySelector("#__NEXT_DATA__")
+					.textContent.match(
+						/\"status\"\:\"(?<status>UP|HASISSUES|UNDERMAINTENANCE)/
+					)
+					.groups.status.valueOf()
+			],
 			smallImageText: document.querySelector(".main-status__wrapper>div>div>h2")
 				.textContent,
 			buttons: [
@@ -62,7 +78,6 @@ function defaultStatus(presenceData: PresenceData): PresenceData {
 }
 
 presence.success("Succesful loaded presence");
-presence.error("You have not much sex");
 
 presence.on("UpdateData", async () => {
 	const [showTimestamp, showButtons, logo] = await Promise.all([
@@ -90,8 +105,8 @@ presence.on("UpdateData", async () => {
 		prevUrl = document.location.href;
 		browsingTimestamp = Math.floor(Date.now() / 1000);
 	}
-	let hostname = document.location.hostname;
-	switch (hostname) {
+
+	switch (document.location.hostname) {
 		case "instat.us": {
 			presenceData = defaultStatus(presenceData);
 			break;
@@ -202,7 +217,7 @@ presence.on("UpdateData", async () => {
 	if (showTimestamp) presenceData.startTimestamp = browsingTimestamp;
 
 	if (presenceData.details) {
-		if (JSON.stringify(presenceData) != JSON.stringify(currentPresenceData)) {
+		if (!deepEqual(currentPresenceData, presenceData)) {
 			currentPresenceData = { endTimestamp, ...presenceData };
 			try {
 				presence.setActivity(presenceData);
