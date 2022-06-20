@@ -25,6 +25,12 @@
 	],
 	"settings": [
 		{
+			"id": "onlyshowstatus",
+			"title": "Only show status",
+			"icon": "fad fa-plug-circle-bolt",
+			"value": false
+		},
+		{
 			"id": "timestamp",
 			"title": "Show Timestamps",
 			"icon": "fad fa-stopwatch",
